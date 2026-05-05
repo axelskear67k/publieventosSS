@@ -10,70 +10,148 @@ if (!isset($_SESSION['usuario'])) {
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buscador Productos</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buscador Inteligente</title>
 
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+<style>
+body{
+  background:#f4f6f9;
+}
+
+.card-hover:hover{
+  transform: translateY(-3px);
+  transition: .2s;
+}
+
+.table thead{
+  background:#f1f3f5;
+}
+
+.badge-soft{
+  padding:6px 10px;
+  border-radius:10px;
+}
+</style>
+
 </head>
+
 <body>
 
-  <div class="container mt-3">
+<!-- NAVBAR -->
+<nav class="navbar bg-white shadow-sm mb-4">
+  <div class="container d-flex justify-content-between align-items-center">
 
-    <!-- 🔙 BOTÓN VOLVER -->
-    <div class="mb-3">
-      <a href="../../index.php" class="btn btn-secondary">
-        <i class="bi bi-arrow-left-circle"></i> Volver al Inicio
-      </a>
+    <span class="fw-bold text-primary">
+      <i class="bi bi-search"></i> Buscador Inteligente
+    </span>
+
+    <a href="../../index.php" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-arrow-left"></i> Volver
+    </a>
+
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- RESUMEN -->
+<div class="row mb-4">
+
+  <div class="col-md-6 mb-3">
+    <div class="card shadow-sm card-hover border-start border-primary border-4">
+      <div class="card-body">
+        <h6 class="text-muted">Búsqueda por ID</h6>
+        <p class="mb-0">Consulta rápida de productos individuales</p>
+      </div>
     </div>
+  </div>
 
-    <h3>Búsqueda por ID (IT)</h3>
+  <div class="col-md-6 mb-3">
+    <div class="card shadow-sm card-hover border-start border-success border-4">
+      <div class="card-body">
+        <h6 class="text-muted">Búsqueda por Categoría</h6>
+        <p class="mb-0">Listado filtrado por tipo de producto</p>
+      </div>
+    </div>
+  </div>
 
-    <form action="" id="form-busqueda-1">
-      <div class="mb-3">
-        <label for="idbuscado">ID Buscado</label>
-        <div class="input-group">
-          <span class="input-group-text">Solo números</span>
-          <input type="text" class="form-control" id="idbuscado" autofocus>
-          <button class="btn btn-success" type="submit">
-            <i class="bi bi-search"></i> Buscar
-          </button>
-        </div>
+</div>
+
+<!-- BUSQUEDA POR ID -->
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-header bg-white fw-semibold">
+    🔎 Buscar Producto por ID
+  </div>
+
+  <div class="card-body">
+
+    <form id="form-busqueda-1">
+
+      <label class="form-label">ID del Producto</label>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text">IT</span>
+        <input type="text" class="form-control" id="idbuscado" placeholder="Ingrese ID">
+        <button class="btn btn-primary">
+          <i class="bi bi-search"></i> Buscar
+        </button>
       </div>
 
-      <div>
-        <label for="resultado">Resultado</label>
-        <input type="text" class="form-control" id="resultado" readonly>
-      </div>
+      <label class="form-label">Resultado</label>
+      <input type="text" class="form-control bg-light" id="resultado" readonly>
+
     </form>
 
-    <hr>
+  </div>
+</div>
 
-    <h3>Búsqueda por Categoría</h3>
+<!-- BUSQUEDA POR CATEGORIA -->
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-header bg-white fw-semibold">
+    📦 Buscar por Categoría
+  </div>
 
-    <form action="" id="form-busqueda-2">
-      <div>
-        <label for="categorias">Categorías</label>
-        <div class="input-group">
-          <select id="categorias" class="form-select">
-            <option value="">Seleccione</option>
-            <option value="Vallas Publicitarias">Vallas Publicitarias</option>
-            <option value="Roll Screen">Roll Screen</option>
-            <option value="Paneletas Publicitarias">Paneletas Publicitarias</option>
-            <option value="Total Led">Total Led</option>
-            <option value="Tricivallas">Tricivallas</option>
-          </select>
-          <button class="btn btn-success" type="submit">
-            <i class="bi bi-search"></i> Buscar
-          </button>
-        </div>
+  <div class="card-body">
+
+    <form id="form-busqueda-2">
+
+      <label class="form-label">Selecciona categoría</label>
+
+      <div class="input-group">
+        <select id="categorias" class="form-select">
+          <option value="">Seleccione</option>
+          <option value="Vallas Publicitarias">Vallas Publicitarias</option>
+          <option value="Roll Screen">Roll Screen</option>
+          <option value="Paneletas Publicitarias">Paneletas Publicitarias</option>
+          <option value="Total Led">Total Led</option>
+          <option value="Tricivallas">Tricivallas</option>
+        </select>
+
+        <button class="btn btn-success">
+          <i class="bi bi-funnel"></i> Filtrar
+        </button>
       </div>
+
     </form>
 
-    <table class="table table-bordered mt-3" id="tabla-categorias">
-      <thead>
+  </div>
+</div>
+
+<!-- TABLA -->
+<div class="card shadow-sm border-0">
+  <div class="card-header bg-white fw-semibold">
+    📋 Resultados
+  </div>
+
+  <div class="table-responsive">
+
+    <table class="table table-hover align-middle mb-0">
+      <thead class="text-center">
         <tr>
           <th>IT</th>
           <th>Código</th>
@@ -81,94 +159,105 @@ if (!isset($_SESSION['usuario'])) {
           <th>Ubicación</th>
           <th>Medida</th>
           <th>Cantidad</th>
-          <th>fecha inicio</th>
-          <th>fecha Termino</th>
+          <th>Inicio</th>
+          <th>Fin</th>
           <th>Estado</th>
         </tr>
       </thead>
-      <tbody></tbody>
+
+      <tbody id="tabla-categorias"></tbody>
     </table>
 
   </div>
+</div>
+
+</div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function (){
+document.addEventListener("DOMContentLoaded", function(){
 
-  function buscarProductoID(){
-    const datos = new FormData()
-    datos.append("operacion", "buscarPorId")
-    datos.append("IT", document.querySelector("#idbuscado").value)
+// BUSCAR POR ID
+function buscarProductoID(){
 
-    fetch(`../../app/controllers/producto.controller.php`, {
-      method: 'POST',
-      body: datos
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.length > 0){
-        const p = data[0]
-        const texto = p.codigo + " - " + p.cliente + " (" + p.categoria + ")"
-        document.querySelector("#resultado").value = texto
-      } else {
-        document.querySelector("#resultado").value = ""
-        alert("No se encontró el producto")
-      }
-    })
-    .catch(error => {
+  const datos = new FormData()
+  datos.append("operacion", "buscarPorId")
+  datos.append("IT", document.querySelector("#idbuscado").value)
+
+  fetch('../../app/controllers/producto.controller.php', {
+    method:'POST',
+    body:datos
+  })
+  .then(res => res.json())
+  .then(data => {
+
+    if(data.length > 0){
+      const p = data[0]
+      document.querySelector("#resultado").value =
+        `${p.codigo} - ${p.cliente} (${p.categoria})`
+    }else{
       document.querySelector("#resultado").value = ""
-      alert("Error en la búsqueda")
-    })
-  }
+      alert("No se encontró el producto")
+    }
 
-  function buscarPorCategoria(){
-    const datos = new FormData()
-    datos.append("operacion", "buscarPorCategoria")
-    datos.append("categoria", document.querySelector("#categorias").value)
-
-    fetch(`../../app/controllers/producto.controller.php`, {
-      method: 'POST',
-      body: datos
-    })
-    .then(response => response.json())
-    .then(data => {
-
-      const tbody = document.querySelector("#tabla-categorias tbody")
-      tbody.innerHTML = ""
-
-      if (data.length > 0){
-        data.forEach(element => {
-          tbody.innerHTML += `
-          <tr>
-            <td>${element.IT}</td>
-            <td>${element.codigo}</td>
-            <td>${element.cliente}</td>
-            <td>${element.ubicacion}</td>
-            <td>${element.medida}</td>
-            <td>${element.cantidad}</td>
-            <td>${element.fecha_inicio}</td>
-            <td>${element.fecha_termino}</td>
-            <td>${element.estado}</td>
-          </tr>
-          `
-        })
-      }
-    })
-    .catch(error => {
-      console.log("Error en búsqueda por categoría")
-    })
-  }
-
-  document.querySelector("#form-busqueda-1")
-    .addEventListener("submit", function(event){
-      event.preventDefault()
-      buscarProductoID()
   })
 
-  document.querySelector("#form-busqueda-2")
-    .addEventListener("submit", function(event){
-      event.preventDefault()
-      buscarPorCategoria()
+}
+
+// BUSCAR POR CATEGORIA
+function buscarPorCategoria(){
+
+  const datos = new FormData()
+  datos.append("operacion", "buscarPorCategoria")
+  datos.append("categoria", document.querySelector("#categorias").value)
+
+  fetch('../../app/controllers/producto.controller.php', {
+    method:'POST',
+    body:datos
   })
+  .then(res => res.json())
+  .then(data => {
+
+    const tbody = document.querySelector("#tabla-categorias")
+    tbody.innerHTML = ""
+
+    data.forEach(p => {
+
+      let estadoColor = "secondary"
+      if(p.estado === "Disponible") estadoColor = "success"
+      if(p.estado === "Alquilado") estadoColor = "warning"
+      if(p.estado === "No Disponible") estadoColor = "danger"
+
+      tbody.innerHTML += `
+      <tr class="text-center">
+        <td><b>${p.IT}</b></td>
+        <td>${p.codigo}</td>
+        <td>${p.cliente}</td>
+        <td>${p.ubicacion}</td>
+        <td>${p.medida}</td>
+        <td><span class="badge bg-primary">${p.cantidad}</span></td>
+        <td>${p.fecha_inicio}</td>
+        <td>${p.fecha_termino}</td>
+        <td><span class="badge bg-${estadoColor}">${p.estado}</span></td>
+      </tr>
+      `
+    })
+
+  })
+
+}
+
+// EVENTOS
+document.querySelector("#form-busqueda-1")
+.addEventListener("submit", e=>{
+  e.preventDefault()
+  buscarProductoID()
+})
+
+document.querySelector("#form-busqueda-2")
+.addEventListener("submit", e=>{
+  e.preventDefault()
+  buscarPorCategoria()
+})
 
 })
 </script>

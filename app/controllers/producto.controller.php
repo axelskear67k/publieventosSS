@@ -8,8 +8,21 @@ if (isset($_POST['operacion'])) {
   switch ($_POST['operacion']) {
 
     case 'listar':
-      $registros = $producto->listar();
-      echo json_encode($registros);
+  $registros = $producto->listar();
+
+  foreach ($registros as &$p) {
+
+    // 🔥 ROTACIÓN
+    $p['rotacion'] = $producto->calcularRotacion($p['cantidad']);
+
+    // 🔥 DÍAS RESTANTES
+    $p['dias'] = $producto->calcularDias($p['fecha_inicio'], $p['fecha_termino']);
+
+    // 🔥 RECOMENDACIÓN
+    $p['recomendacion'] = $producto->recomendacion($p['dias'], $p['cantidad']);
+  }
+
+    echo json_encode($registros);
     break;
 
     case 'registrar':

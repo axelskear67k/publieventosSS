@@ -11,7 +11,6 @@ class Producto extends Conexion
     $this->pdo = parent::getConexion();
   }
 
-
   public function listar(): array
   {
     try {
@@ -32,7 +31,6 @@ class Producto extends Conexion
     }
   }
 
- 
   public function registrar($registro = []): int
   {
     try {
@@ -64,7 +62,6 @@ class Producto extends Conexion
     }
   }
 
-
   public function eliminar($IT): int
   {
     try {
@@ -78,7 +75,6 @@ class Producto extends Conexion
       return -1;
     }
   }
-
 
   public function actualizar($registro = []): int
   {
@@ -120,9 +116,6 @@ class Producto extends Conexion
     }
   }
 
-
-  // OBTENER POR ID (PARA EDITAR)
- 
   public function obtener(int $IT): array
   {
     try {
@@ -138,9 +131,6 @@ class Producto extends Conexion
     }
   }
 
-  
-  // BUSCAR POR ID
- 
   public function buscarPorId(int $IT): array
   {
     try {
@@ -156,9 +146,6 @@ class Producto extends Conexion
     }
   }
 
-  
-  // BUSCAR POR CATEGORÍA
- 
   public function buscarPorCategoria(string $categoria): array
   {
     try {
@@ -175,35 +162,72 @@ class Producto extends Conexion
   }
 
   // 📊 ESTADÍSTICAS GENERALES
-public function estadisticas() {
-  try {
-    $sql = "
-      SELECT 
-        COUNT(*) as total_productos,
-        SUM(cantidad) as total_stock,
-        AVG(DATEDIFF(fecha_termino, fecha_inicio)) as promedio_dias
-      FROM productos
-    ";
+  public function estadisticas() {
+    try {
+      $sql = "
+        SELECT 
+          COUNT(*) as total_productos,
+          SUM(cantidad) as total_stock,
+          AVG(DATEDIFF(fecha_termino, fecha_inicio)) as promedio_dias
+        FROM productos
+      ";
 
-    $consulta = $this->pdo->prepare($sql);
-    $consulta->execute();
+      $consulta = $this->pdo->prepare($sql);
+      $consulta->execute();
 
-    return $consulta->fetch(PDO::FETCH_ASSOC);
+      return $consulta->fetch(PDO::FETCH_ASSOC);
 
-  } catch (Exception $e) {
-    return [];
+    } catch (Exception $e) {
+      return [];
+    }
   }
-}
-// 📦 POR CATEGORÍA
-public function categorias() {
-  $sql = "SELECT categoria, COUNT(*) as total FROM productos GROUP BY categoria";
-  return $this->pdo->query($sql);
-}
 
-// 📊 POR ESTADO
-public function estados() {
-  $sql = "SELECT estado, COUNT(*) as total FROM productos GROUP BY estado";
-  return $this->pdo->query($sql);
-}
+  // 📦 POR CATEGORÍA
+  public function categorias() {
+    $sql = "SELECT categoria, COUNT(*) as total FROM productos GROUP BY categoria";
+    return $this->pdo->query($sql);
+  }
+
+  // 📊 POR ESTADO
+  public function estados() {
+    $sql = "SELECT estado, COUNT(*) as total FROM productos GROUP BY estado";
+    return $this->pdo->query($sql);
+  }
+
+  // =========================
+  // 🔥 INTELIGENCIA (PEA)
+  // =========================
+
+  // ROTACIÓN
+  public function calcularRotacion($cantidad) {
+    if ($cantidad <= 2) {
+      return "Alta";
+    } elseif ($cantidad <= 5) {
+      return "Media";
+    } else {
+      return "Baja";
+    }
+  }
+
+  // DÍAS RESTANTES
+  public function calcularDias($inicio, $termino) {
+    $hoy = new DateTime();
+    $fin = new DateTime($termino);
+
+    if ($hoy > $fin) {
+      return 0;
+    }
+
+    return $hoy->diff($fin)->days;
+  }
+
+  // RECOMENDACIÓN
+  public function recomendacion($dias, $cantidad) {
+    if ($dias <= 3 || $cantidad <= 2) {
+      return "Reabastecer";
+    } else {
+      return "Stock OK";
+    }
+  }
 
 }

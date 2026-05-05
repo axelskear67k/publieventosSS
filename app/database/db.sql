@@ -1,5 +1,5 @@
 -- Active: 1776866079393@@127.0.0.1@3306@inventario
--- Active: 1771597135788@@127.0.0.1@3306
+
 CREATE DATABASE inventario;
 
 USE inventario;
@@ -9,9 +9,9 @@ CREATE TABLE productos (
     codigo CHAR(4) NOT NULL,
     cliente VARCHAR(100) NOT NULL,
     categoria ENUM('Vallas Publicitarias',
-                   'Rollletas Publicitarias',
-                   'Tota Screen',
-                   'Panel Led',
+                   'Roll Screen',
+                   'Paneletas Publicitarias',
+                   'Total Led',
                    'Tricivallas') NOT NULL,
     ubicacion VARCHAR(150) NOT NULL,
     medida VARCHAR(50) NOT NULL,
@@ -32,7 +32,6 @@ INSERT INTO usuarios (usuario, password, rol) VALUES
 ('admin', '1234', 'admin'),
 ('edson', '1234', 'usuario');
 
-
 ALTER TABLE productos 
 MODIFY categoria ENUM(
 'Vallas Publicitarias',
@@ -41,9 +40,6 @@ MODIFY categoria ENUM(
 'Total Led',
 'Tricivallas'
 );
-
-
-
 
 INSERT INTO productos 
 (codigo, cliente, categoria, ubicacion, medida, cantidad, fecha_inicio, fecha_termino, estado)
@@ -54,7 +50,5 @@ VALUES
 ('V004','LEA','Total Led','Chincha','4m x 2m',1,'2026-03-01','2026-03-30','Disponible'),
 ('V005','CARLOS ALVAREZ','Tricivallas','Chincha','2m x 1m',1,'2026-03-01','2026-03-30','Disponible');
 
-
-
 SELECT * FROM productos;
-select * from usuarios
+SELECT * FROM usuarios;
